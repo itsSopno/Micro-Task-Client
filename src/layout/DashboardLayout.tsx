@@ -9,14 +9,16 @@ import {
   History, 
   Users, 
   ClipboardCheck, 
-  Bell, 
   LogOut, 
   Menu, 
   X,
   Home as HomeIcon,
   Coins,
-  ChevronRight
+  ChevronRight,
+  TrendingUp,
+  Briefcase
 } from 'lucide-react';
+import NotificationDropdown from '../components/NotificationDropdown';
 
 const DashboardLayout = () => {
   const { user, role, coins, logOut } = useAuth();
@@ -47,6 +49,7 @@ const DashboardLayout = () => {
     { icon: <LayoutDashboard size={20} />, label: "Admin Home", path: "/dashboard" },
     { icon: <Users size={20} />, label: "Manage Users", path: "/dashboard/manage-users" },
     { icon: <ListTodo size={20} />, label: "Manage Tasks", path: "/dashboard/manage-tasks" },
+    { icon: <DollarSign size={20} />, label: "Withdraw Requests", path: "/dashboard/withdraw-requests" },
   ];
 
   const commonLinks = [
@@ -131,39 +134,36 @@ const DashboardLayout = () => {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden relative">
         {/* Mobile Header */}
-        <header className="h-20 lg:hidden flex items-center justify-between px-6 bg-white border-b shadow-sm">
+        <header className="h-20 lg:hidden flex items-center justify-between px-6 bg-white border-b shadow-sm shrink-0">
            <button onClick={() => setIsSidebarOpen(true)} className="p-2 text-slate-600">
              <Menu size={28} />
            </button>
-           <span className="text-lg font-black text-slate-900 uppercase">Dashboard</span>
+           <span className="text-lg font-black text-slate-900 uppercase tracking-tighter">MicroTask</span>
            <div className="flex items-center gap-3">
-             <Bell size={24} className="text-slate-400" />
+             <NotificationDropdown />
              <img src={user?.photoURL || ""} alt="User" className="w-10 h-10 rounded-xl object-cover" />
            </div>
         </header>
 
-        {/* Global Dashboard Notifications / Search bar or breadcrumbs could go here */}
-        <div className="hidden lg:flex h-20 items-center justify-between px-12 bg-white border-b">
+        {/* Desktop Header */}
+        <div className="hidden lg:flex h-20 items-center justify-between px-12 bg-white border-b shrink-0">
            <h2 className="text-xl font-black text-slate-900 flex items-center gap-3 uppercase tracking-wider italic">
              Welcome back, <span className="text-primary">{user?.displayName?.split(' ')[0]}</span>!
            </h2>
            <div className="flex items-center gap-8">
-             <div className="relative group cursor-pointer">
-               <Bell size={24} className="text-slate-400 group-hover:text-primary transition-colors" />
-               <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-             </div>
-             <div className="flex items-center gap-4">
+             <NotificationDropdown />
+             <div className="flex items-center gap-4 border-l border-slate-100 pl-8">
                 <div className="text-right">
                   <p className="text-sm font-black text-slate-900 leading-tight">{user?.displayName}</p>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase">{role}</p>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{role}</p>
                 </div>
-                <img src={user?.photoURL || ""} alt="User" className="w-12 h-12 rounded-2xl object-cover ring-2 ring-primary/10 shadow-lg" />
+                <img src={user?.photoURL || ""} alt="User" className="w-12 h-12 rounded-2xl object-cover ring-4 ring-slate-50 shadow-lg" />
              </div>
            </div>
         </div>
 
         {/* Dynamic Content */}
-        <main className="flex-1 overflow-y-auto p-6 md:p-12">
+        <main className="flex-1 overflow-y-auto p-6 md:p-12 bg-[#F8FAFC]">
           <Outlet />
         </main>
 
